@@ -46,18 +46,18 @@ class CardapioPage extends StatelessWidget {
                       );
                     },
                     leading: ClipRRect(
-                      borderRadius: BorderRadius.circular(8),
-                      child: Image.asset(
-                        pizza.imagem,
-                        width: 50,
-                        height: 50,
-                        fit: BoxFit.cover,
-                        errorBuilder: (context, error, stackTrace) =>
-                            const Icon(
-                              Icons.local_pizza,
-                              size: 40,
-                              color: Color(0xFFA41616),
-                            ),
+                      borderRadius: BorderRadius.circular(10),
+                      child: Container(
+                        width: 60,
+                        height: 60,
+                        color: Colors.grey[100],
+                        child: Padding(
+                          padding: const EdgeInsets.all(4),
+                          child: Image.asset(
+                            pizza.imagem,
+                            fit: BoxFit.contain,
+                          ),
+                        ),
                       ),
                     ),
                     title: Text(

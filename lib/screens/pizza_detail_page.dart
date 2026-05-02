@@ -32,147 +32,155 @@ class _PizzaDetailPageState extends State<PizzaDetailPage> {
     return Scaffold(
       appBar: AppBar(title: Text(widget.pizza.nome)),
       body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          // imagem
-          Image.asset(
-            widget.pizza.imagem,
-            width: double.infinity,
-            height: 220,
-            fit: BoxFit.cover,
-            errorBuilder: (context, error, stackTrace) =>
-                const Icon(Icons.local_pizza, size: 100),
-          ),
+  children: [
+    // IMAGEM
+    Container(
+      width: double.infinity,
+      height: 250,
+      color: Colors.grey[100],
+      child: Padding(
+        padding: const EdgeInsets.all(12),
+        child: Image.asset(
+          widget.pizza.imagem,
+          fit: BoxFit.contain,
+        ),
+      ),
+    ),
 
-          Padding(
-            padding: const EdgeInsets.all(16),
-            child: Text(
-              widget.pizza.nome,
-              style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
-            ),
-          ),
-
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
-            child: Text(widget.pizza.descricao),
-          ),
-
-          const SizedBox(height: 20),
-
-          // adicionais
-          if (isSalgada) ...[
-            const SizedBox(height: 20),
-
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: const Text(
-                "Adicionais",
-                style: TextStyle(fontWeight: FontWeight.bold),
+    // CONTEÚDO
+    Expanded(
+      child: Container(
+        decoration: const BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(16),
+          child: ListView(
+            children: [
+              // NOME
+              Text(
+                widget.pizza.nome,
+                style: const TextStyle(
+                  fontSize: 22,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
-            ),
 
-            CheckboxListTile(
-              title: const Text("Extra queijo (+R\$5)"),
-              value: extraQueijo,
-              onChanged: (value) {
-                setState(() {
-                  extraQueijo = value!;
-                });
-              },
-            ),
+              const SizedBox(height: 8),
 
-            CheckboxListTile(
-              title: const Text("Borda recheada (+R\$8)"),
-              value: bordaRecheada,
-              onChanged: (value) {
-                setState(() {
-                  bordaRecheada = value!;
-                });
-              },
-            ),
-          ],
+              // DESCRIÇÃO
+              Text(
+                widget.pizza.descricao,
+                style: TextStyle(color: Colors.grey[600]),
+              ),
 
-          const Spacer(),
+              const SizedBox(height: 20),
 
-          // quantidade+total+botão
-          Container(
-            padding: const EdgeInsets.all(16),
-            decoration: BoxDecoration(
-              color: Colors.grey[100],
-              boxShadow: const [
-                BoxShadow(color: Colors.black12, blurRadius: 5),
-              ],
-            ),
-            child: Column(
-              children: [
-                // quantidade
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    IconButton(
-                      onPressed: () {
-                        if (quantidade > 1) {
-                          setState(() {
-                            quantidade--;
-                          });
-                        }
-                      },
-                      icon: const Icon(Icons.remove),
-                    ),
-                    Text(
-                      quantidade.toString(),
-                      style: const TextStyle(fontSize: 18),
-                    ),
-                    IconButton(
-                      onPressed: () {
-                        setState(() {
-                          quantidade++;
-                        });
-                      },
-                      icon: const Icon(Icons.add),
-                    ),
-                  ],
-                ),
-
-                const SizedBox(height: 10),
-
-                // total
-                Text(
-                  "Total: R\$ ${precoTotal.toStringAsFixed(2)}",
-                  style: const TextStyle(
-                    fontSize: 20,
-                    color: Colors.green,
+              // ADICIONAIS (se for salgada)
+              if (widget.pizza.categoria == "Salgadas") ...[
+                const Text(
+                  "Adicionais",
+                  style: TextStyle(
                     fontWeight: FontWeight.bold,
+                    fontSize: 16,
                   ),
                 ),
 
-                const SizedBox(height: 10),
+                CheckboxListTile(
+                  title: const Text("Extra queijo (+R\$5)"),
+                  value: extraQueijo,
+                  onChanged: (value) {
+                    setState(() {
+                      extraQueijo = value!;
+                    });
+                  },
+                ),
 
-                // botão
-                SizedBox(
-                  width: double.infinity,
-                  child: ElevatedButton(
-                    onPressed: () {
-                      for (int i = 0; i < quantidade; i++) {
-                        Cart().adicionar(widget.pizza);
-                      }
-
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          content: Text(
-                            "${widget.pizza.nome} adicionada ao carrinho",
-                          ),
-                        ),
-                      );
-                    },
-                    child: const Text("Adicionar ao Carrinho"),
-                  ),
+                CheckboxListTile(
+                  title: const Text("Borda recheada (+R\$8)"),
+                  value: bordaRecheada,
+                  onChanged: (value) {
+                    setState(() {
+                      bordaRecheada = value!;
+                    });
+                  },
                 ),
               ],
+            ],
+          ),
+        ),
+      ),
+    ),
+
+    // BARRA INFERIOR (fixa)
+    Container(
+      padding: const EdgeInsets.all(16),
+      decoration: const BoxDecoration(
+        color: Colors.white,
+        boxShadow: [
+          BoxShadow(color: Colors.black12, blurRadius: 5),
+        ],
+      ),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          // QUANTIDADE
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              IconButton(
+                onPressed: () {
+                  if (quantidade > 1) {
+                    setState(() => quantidade--);
+                  }
+                },
+                icon: const Icon(Icons.remove),
+              ),
+              Text(
+                quantidade.toString(),
+                style: const TextStyle(fontSize: 18),
+              ),
+              IconButton(
+                onPressed: () {
+                  setState(() => quantidade++);
+                },
+                icon: const Icon(Icons.add),
+              ),
+            ],
+          ),
+
+          const SizedBox(height: 10),
+
+          // BOTÃO
+          SizedBox(
+            width: double.infinity,
+            child: ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                padding: const EdgeInsets.symmetric(vertical: 14),
+              ),
+              onPressed: () {
+                for (int i = 0; i < quantidade; i++) {
+                  Cart().adicionar(widget.pizza);
+                }
+
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content:
+                        Text("${widget.pizza.nome} adicionada ao carrinho"),
+                  ),
+                );
+              },
+              child: Text(
+                "Adicionar • R\$ ${precoTotal.toStringAsFixed(2)}",
+              ),
             ),
           ),
         ],
       ),
+    ),
+  ],
+),
     );
   }
 }
