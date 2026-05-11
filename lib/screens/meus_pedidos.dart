@@ -1,44 +1,26 @@
 import 'package:flutter/material.dart';
+import '../models/pedidos_manager.dart';
 
 class MeusPedidosPage extends StatelessWidget {
   const MeusPedidosPage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    // PEDIDOS EXEMPLO
-    final pedidos = [
-      {
-        "numero": "#1001",
-        "status": "Em preparo",
-        "itens": "1x Calabresa\n1x Coca-Cola 2L",
-        "total": 54.00,
-        "icone": Icons.local_pizza,
-        "cor": Colors.orange,
-      },
-      {
-        "numero": "#1002",
-        "status": "Entregue",
-        "itens": "1x Chocolate com Morango",
-        "total": 48.00,
-        "icone": Icons.check_circle,
-        "cor": Colors.green,
-      },
-      {
-        "numero": "#1003",
-        "status": "Saiu para entrega",
-        "itens": "2x Frango c/ Catupiry",
-        "total": 100.00,
-        "icone": Icons.delivery_dining,
-        "cor": Colors.blue,
-      },
-    ];
+    final pedidos = PedidosManager().pedidos;
 
     return Scaffold(
       appBar: AppBar(
         title: const Text("Meus Pedidos"),
       ),
 
-      body: ListView.builder(
+      body: pedidos.isEmpty
+    ? const Center(
+        child: Text(
+          "Nenhum pedido realizado",
+          style: TextStyle(fontSize: 16),
+        ),
+      )
+    : ListView.builder(
         padding: const EdgeInsets.all(16),
         itemCount: pedidos.length,
 
@@ -57,7 +39,9 @@ class MeusPedidosPage extends StatelessWidget {
               padding: const EdgeInsets.all(16),
 
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+                crossAxisAlignment:
+                    CrossAxisAlignment.start,
+
                 children: [
 
                   // TOPO
@@ -67,7 +51,7 @@ class MeusPedidosPage extends StatelessWidget {
 
                     children: [
                       Text(
-                        "Pedido ${pedido["numero"]}",
+                        "Pedido #${index + 1}",
                         style: const TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
@@ -81,29 +65,26 @@ class MeusPedidosPage extends StatelessWidget {
                         ),
 
                         decoration: BoxDecoration(
-                          color:
-                              (pedido["cor"] as Color)
-                                  .withOpacity(0.15),
+                          color: Colors.orange.withOpacity(0.15),
 
                           borderRadius:
                               BorderRadius.circular(20),
                         ),
 
-                        child: Row(
+                        child: const Row(
                           children: [
                             Icon(
-                              pedido["icone"] as IconData,
+                              Icons.local_pizza,
                               size: 18,
-                              color: pedido["cor"] as Color,
+                              color: Colors.orange,
                             ),
 
-                            const SizedBox(width: 6),
+                            SizedBox(width: 6),
 
                             Text(
-                              pedido["status"].toString(),
+                              "Em preparo",
                               style: TextStyle(
-                                color:
-                                    pedido["cor"] as Color,
+                                color: Colors.orange,
                                 fontWeight: FontWeight.w600,
                               ),
                             ),
@@ -125,10 +106,19 @@ class MeusPedidosPage extends StatelessWidget {
 
                   const SizedBox(height: 6),
 
-                  Text(
-                    pedido["itens"].toString(),
-                    style: TextStyle(
-                      color: Colors.grey[700],
+                  ...pedido.itens.map(
+                    (item) => Padding(
+                      padding: const EdgeInsets.only(
+                        bottom: 6,
+                      ),
+
+                      child: Text(
+                        "${item.quantidade}x ${item.pizza.nome}"
+                        "${item.adicionais.isNotEmpty ? " • ${item.adicionais.join(", ")}" : ""}",
+                        style: TextStyle(
+                          color: Colors.grey[700],
+                        ),
+                      ),
                     ),
                   ),
 
@@ -148,7 +138,7 @@ class MeusPedidosPage extends StatelessWidget {
                       ),
 
                       Text(
-                        "R\$ ${(pedido["total"] as double).toStringAsFixed(2)}",
+                        "R\$ ${pedido.total.toStringAsFixed(2)}",
                         style: const TextStyle(
                           color: Colors.green,
                           fontWeight: FontWeight.bold,

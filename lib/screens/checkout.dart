@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import '../models/cart_model.dart';
+import '../models/pedido_model.dart';
+import '../models/pedidos_manager.dart';
+import 'meus_pedidos.dart';
 
 class CheckoutPage extends StatefulWidget {
   const CheckoutPage({super.key});
@@ -60,19 +63,30 @@ class _CheckoutPageState extends State<CheckoutPage> {
                   return;
                 }
 
-                cart.limpar();
-
                 showDialog(
                   context: context,
                   builder: (_) => AlertDialog(
                     title: const Text("Pedido Confirmado"),
-                    content: const Text("Seu pedido foi enviado!"),
+                    content: const Text("Seu pedido está sendo preparado!"),
                     actions: [
                       TextButton(
                         onPressed: () {
-                          Navigator.pop(context);
-                          Navigator.pop(context);
-                          Navigator.pop(context);
+                          PedidosManager().adicionarPedido(
+                            Pedido(
+                              itens: List.from(cart.itens),
+                              total: cart.total,
+                              status: "Em preparo",
+                            ),
+                          );
+
+                          cart.limpar();
+
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                              builder: (_) => const MeusPedidosPage(),
+                            ),
+                          );
                         },
                         child: const Text("OK"),
                       ),

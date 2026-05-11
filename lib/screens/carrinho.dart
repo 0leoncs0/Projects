@@ -26,11 +26,92 @@ class _CartPageState extends State<CartPage> {
                     itemBuilder: (context, index) {
                       final item = cart.itens[index];
 
-                      return ListTile(
-                        title: Text(item.pizza.nome),
-                        subtitle: Text("Qtd: ${item.quantidade}"),
-                        trailing: Text(
-                          "R\$ ${(item.pizza.preco * item.quantidade).toStringAsFixed(2)}",
+                      return Card(
+                        margin: const EdgeInsets.symmetric(
+                          horizontal: 12,
+                          vertical: 6,
+                        ),
+                        child: ListTile(
+                          contentPadding: const EdgeInsets.symmetric(
+                            horizontal: 12,
+                            vertical: 8,
+                          ),
+                          leading: ClipRRect(
+                            borderRadius: BorderRadius.circular(8),
+                            child: Image.asset(
+                              item.pizza.imagem,
+                              width: 60,
+                              height: 60,
+                              fit: BoxFit.cover,
+                              errorBuilder: (_, _, _) =>
+                                  const Icon(Icons.local_pizza),
+                            ),
+                          ),
+
+                          title: Text(
+                            item.pizza.nome,
+                            style: const TextStyle(fontWeight: FontWeight.bold),
+                          ),
+
+                          subtitle: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text("Qtd: ${item.quantidade}"),
+
+                              if (item.adicionais.isNotEmpty)
+                                Text(
+                                  "Adicionais: ${item.adicionais.join(", ")}",
+                                  style: TextStyle(
+                                    color: Colors.grey[700],
+                                    fontSize: 12,
+                                  ),
+                                ),
+                            ],
+                          ),
+
+                          trailing: SizedBox(
+                            width: 70,
+                            child: Center(
+                              child: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Text(
+                                    "R\$ ${item.precoTotal.toStringAsFixed(2)}",
+                                    textAlign: TextAlign.center,
+                                    style: const TextStyle(
+                                      color: Colors.green,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 12,
+                                    ),
+                                  ),
+
+                                  const SizedBox(height: 4),
+
+                                  GestureDetector(
+                                    onTap: () {
+                                      setState(() {
+                                        cart.itens.removeAt(index);
+                                      });
+
+                                      ScaffoldMessenger.of(
+                                        context,
+                                      ).showSnackBar(
+                                        const SnackBar(
+                                          content: Text("Item removido"),
+                                        ),
+                                      );
+                                    },
+
+                                    child: const Icon(
+                                      Icons.delete,
+                                      color: Colors.red,
+                                      size: 20,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
                         ),
                       );
                     },

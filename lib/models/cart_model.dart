@@ -4,7 +4,16 @@ class CartItem {
   final Pizza pizza;
   int quantidade;
 
-  CartItem({required this.pizza, this.quantidade = 1});
+  final List<String> adicionais;
+
+  final double precoTotal;
+
+  CartItem({
+    required this.pizza,
+    this.quantidade = 1,
+    this.adicionais = const [],
+    required this.precoTotal,
+  });
 }
 
 class Cart {
@@ -18,15 +27,9 @@ class Cart {
 
   final List<CartItem> itens = [];
 
-  void adicionar(Pizza pizza) {
-    final index = itens.indexWhere((item) => item.pizza.nome == pizza.nome);
-
-    if (index >= 0) {
-      itens[index].quantidade++;
-    } else {
-      itens.add(CartItem(pizza: pizza));
-    }
-  }
+  void adicionar(CartItem item) {
+  itens.add(item);
+}
 
   void remover(Pizza pizza) {
     itens.removeWhere((item) => item.pizza.nome == pizza.nome);
@@ -35,7 +38,7 @@ class Cart {
   double get total {
     return itens.fold(
       0,
-      (sum, item) => sum + (item.pizza.preco * item.quantidade),
+      (sum, item) => sum + item.precoTotal,
     );
   }
 
