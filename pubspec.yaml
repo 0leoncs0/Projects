@@ -36,6 +36,8 @@ dependencies:
   cupertino_icons: ^1.0.8
 
 dev_dependencies:
+  flutter_launcher_icons: ^0.13.1
+  flutter_native_splash: ^2.4.0
   flutter_test:
     sdk: flutter
 
@@ -89,3 +91,19 @@ flutter:
   # see https://flutter.dev/to/font-from-package
   assets:
     - assets/
+
+flutter_launcher_icons:
+  android: "launcher_icon"
+  ios: true
+
+  image_path: "assets/icon/icon.png"
+
+  adaptive_icon_background: "#A41616"
+  adaptive_icon_foreground: "assets/icon/icon.png"
+
+flutter_native_splash:
+  color: "#A41616"
+  image: assets/splash.png
+  fullscreen: true
+  android: true
+  ios: true

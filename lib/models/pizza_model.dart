@@ -37,6 +37,43 @@ List<Pizza> menuPizzas = [
     imagem: 'assets/Frango.jpg',
     categoria: 'Salgadas', // <-- Adicionado
   ),
+  Pizza(
+    nome: 'Atum',
+    descricao: 'Molho de tomate, mussarela, atum sólido, cebola fatiada e azeitonas',
+    preco: 52.0,
+    imagem: 'assets/atum.png',
+    categoria: 'Salgadas',
+  ),
+  Pizza(
+    nome: 'Toscana',
+    descricao: 'Molho de tomate, mussarela, calabresa moída, rodelas de cebola e orégano',
+    preco: 48.0,
+    imagem: 'assets/toscana.png',
+    categoria: 'Salgadas',
+  ),
+
+  Pizza(
+    nome: 'Camarão',
+    descricao: 'Molho de tomate, mussarela, camarões refogados no azeite, catupiry e salsinha',
+    preco: 65.0,
+    imagem: 'assets/camarao.png',
+    categoria: 'Salgadas',
+  ),
+  Pizza(
+    nome: 'Portuguesa',
+    descricao: 'Molho de tomate, mussarela, presunto, ovos cozidos, cebola, ervilha e azeitonas pretas',
+    preco: 55.0,
+    imagem: 'assets/portuguesa.png',
+    categoria: 'Salgadas',
+  ),
+
+  Pizza(
+    nome: 'Mussarela',
+    descricao: 'Molho de tomate, dupla camada de queijo mussarela e orégano',
+    preco: 40.0,
+    imagem: 'assets/mussarela.png',
+    categoria: 'Salgadas',
+  ),
 
   // DOCES
   Pizza(
@@ -60,6 +97,45 @@ List<Pizza> menuPizzas = [
     imagem: "assets/doce_romeu.png",
     categoria: 'Doces', // <-- Adicionado
   ),
+  Pizza(
+    nome: "Oreo",
+    descricao: "Creme delicioso com pedaços de bolacha Oreo e cobertura de chocolate.",
+    preco: 45.00,
+    imagem: "assets/oreo.png",
+    categoria: 'Doces',
+  ),
+
+  Pizza(
+    nome: "Prestígio",
+    descricao: "Chocolate de leite derretido coberto com coco fresco ralado.",
+    preco: 46.00,
+    imagem: "assets/prestigio.png",
+    categoria: 'Doces',
+  ),
+
+  Pizza(
+    nome: "Nutella",
+    descricao: "Deliciosa e generosa camada de creme de avelã Nutella.",
+    preco: 50.00,
+    imagem: "assets/nutella.png",
+    categoria: 'Doces',
+  ),
+
+  Pizza(
+    nome: "Chocolate com Uva",
+    descricao: "Chocolate de leite derretido coberto com uvas frescas inteiras.",
+    preco: 48.00,
+    imagem: "assets/uva_chocolate.png",
+    categoria: 'Doces',
+  ),
+
+  Pizza(
+    nome: "Sonho de Valsa",
+    descricao: "Chocolate de leite derretido com pedaços crocantes de bombom Sonho de Valsa.",
+    preco: 49.00,
+    imagem: "assets/sonho_valsa.png",
+    categoria: 'Doces',
+  ),
 
   // BEBIDAS
   Pizza(
@@ -82,5 +158,44 @@ List<Pizza> menuPizzas = [
     preco: 4.50,
     imagem: "assets/bebida_agua.jpg",
     categoria: 'Bebidas', // <-- Adicionado
+  ),
+  Pizza(
+    nome: "Água com Gás",
+    descricao: "Água mineral Crystal com gás - Garrafa 500ml",
+    preco: 5.00,
+    imagem: "assets/agua_gas.png",
+    categoria: 'Bebidas',
+  ),
+
+  Pizza(
+    nome: "Suco de Maracujá",
+    descricao: "Suco de maracujá Maguary - Garrafa 500ml",
+    preco: 8.00,
+    imagem: "assets/maracuja.png",
+    categoria: 'Bebidas',
+  ),
+
+  Pizza(
+    nome: "Suco de Uva",
+    descricao: "Suco de uva Maguary - Garrafa 500ml",
+    preco: 8.00,
+    imagem: "assets/suco_uva.png",
+    categoria: 'Bebidas',
+  ),
+
+  Pizza(
+    nome: "Fanta Laranja",
+    descricao: "Refrigerante Fanta Laranja - Garrafa 2L",
+    preco: 12.00,
+    imagem: "assets/fanta.png",
+    categoria: 'Bebidas',
+  ),
+
+  Pizza(
+    nome: "Sprite",
+    descricao: "Refrigerante Sprite Lima-Limão - Garrafa 2L",
+    preco: 12.00,
+    imagem: "assets/sprite.png",
+    categoria: 'Bebidas',
   ),
 ];
