@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:delivery/screens/cardapio.dart';
 import 'package:delivery/screens/carrinho.dart';
+import 'package:delivery/screens/meus_pedidos.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -77,6 +78,28 @@ class HomePage extends StatelessWidget {
                     );
                   },
                   child: const Text("Ver Cardápio Completo"),
+                ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+
+              child: SizedBox(
+                width: double.infinity,
+
+                child: OutlinedButton.icon(
+                  icon: const Icon(Icons.receipt_long),
+
+                  label: const Text("Meus Pedidos"),
+
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (_) => const MeusPedidosPage(),
+                      ),
+                    );
+                  },
                 ),
               ),
             ),
