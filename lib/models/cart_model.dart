@@ -1,5 +1,6 @@
 import '../models/pizza_model.dart';
 
+
 class CartItem {
   final Pizza pizza;
   int quantidade;

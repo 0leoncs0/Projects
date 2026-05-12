@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:delivery/screens/cardapio.dart';
 import 'package:delivery/screens/carrinho.dart';
 import 'package:delivery/screens/meus_pedidos.dart';
+import 'package:delivery/screens/tela_promocao_terca.dart';  // <-- Adicione
+import 'package:delivery/screens/tela_combo_familia.dart';   // <-- Adicione
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -33,8 +35,28 @@ class HomePage extends StatelessWidget {
               height: 200,
               child: PageView(
                 children: [
-                  _bannerDestaque(Color(0xFFA41616), "Promoção de Terça!"),
-                  _bannerDestaque(Colors.orange, "Combo Família"),
+                  _bannerDestaque(         // <-- Agora passa o context e onTap
+                    const Color(0xFFA41616),
+                    "Promoção de Terça!",
+                    context,
+                    onTap: () => Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (_) => const TelaPromocaoTerca(),
+                      ),
+                    ),
+                  ),
+                  _bannerDestaque(
+                    Colors.orange,
+                    "Combo Família",
+                    context,
+                    onTap: () => Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (_) => const TelaComboFamilia(),
+                      ),
+                    ),
+                  ),
                 ],
               ),
             ),
@@ -47,7 +69,7 @@ class HomePage extends StatelessWidget {
               ),
             ),
 
-            // 2. Seção de Categorias (Adicionada de volta)
+            // 2. Seção de Categorias
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
@@ -63,7 +85,7 @@ class HomePage extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.all(16.0),
               child: SizedBox(
-                width: double.infinity, // Botão ocupa a largura toda
+                width: double.infinity,
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
                     padding: const EdgeInsets.symmetric(vertical: 15),
@@ -83,15 +105,11 @@ class HomePage extends StatelessWidget {
             ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16),
-
               child: SizedBox(
                 width: double.infinity,
-
                 child: OutlinedButton.icon(
                   icon: const Icon(Icons.receipt_long),
-
                   label: const Text("Meus Pedidos"),
-
                   onPressed: () {
                     Navigator.push(
                       context,
@@ -109,28 +127,32 @@ class HomePage extends StatelessWidget {
     );
   }
 
-  // Widget dos Banners
-  Widget _bannerDestaque(Color cor, String texto) {
-    return Container(
-      margin: const EdgeInsets.all(10),
-      decoration: BoxDecoration(
-        color: cor,
-        borderRadius: BorderRadius.circular(15),
-      ),
-      child: Center(
-        child: Text(
-          texto,
-          style: const TextStyle(
-            color: Colors.white,
-            fontSize: 24,
-            fontWeight: FontWeight.bold,
+  // Widget dos Banners — agora com context e onTap
+  Widget _bannerDestaque(Color cor, String texto, BuildContext context,
+      {VoidCallback? onTap}) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        margin: const EdgeInsets.all(10),
+        decoration: BoxDecoration(
+          color: cor,
+          borderRadius: BorderRadius.circular(15),
+        ),
+        child: Center(
+          child: Text(
+            texto,
+            style: const TextStyle(
+              color: Colors.white,
+              fontSize: 24,
+              fontWeight: FontWeight.bold,
+            ),
           ),
         ),
       ),
     );
   }
 
-  // Widget das Categorias
+  // Widget das Categorias (sem alterações)
   Widget _botaoCategoria(IconData icone, String label, BuildContext context) {
     return GestureDetector(
       onTap: () {
@@ -145,8 +167,8 @@ class HomePage extends StatelessWidget {
         children: [
           CircleAvatar(
             radius: 30,
-            backgroundColor: Color(0xFFA41616).withOpacity(0.1),
-            child: Icon(icone, color: Color(0xFFA41616), size: 30),
+            backgroundColor: const Color(0xFFA41616).withOpacity(0.1),
+            child: Icon(icone, color: const Color(0xFFA41616), size: 30),
           ),
           const SizedBox(height: 8),
           Text(label, style: const TextStyle(fontWeight: FontWeight.w500)),
